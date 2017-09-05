@@ -13,6 +13,14 @@ class AssociationOptions
 end
 
 class BelongsToOptions < AssociationOptions
+  def initialize(name, options = {})
+    defaults = { foreign_key: "#{name}_id".to_sym,
+                 class_name: name.to_s.camelcase,
+                 primary_key: :id}
+
+    options = defaults.merge(options)
+
+    options.each_key { |key| send("#{key}=", options[key]) }
 end
 
 class HasManyOptions < AssociationOptions
