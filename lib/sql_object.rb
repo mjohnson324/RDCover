@@ -14,8 +14,7 @@ class SQLObject
   end
 
   def self.table_name
-    stringified_class_name = self.to_s
-    @table_name ||= stringified_class_name.tableize
+    @table_name ||= "#{self}".tableize
   end
 
   def self.table_name=(name)
@@ -86,7 +85,15 @@ class SQLObject
   end
 
   def update
-
+    my_values = attribute_values[1..-1]
+    DBConnection.execute(<<-SQL, *my_values, id)
+      UPDATE
+        #{table_class.table_name}
+      SET
+        #{values_to_update}
+      WHERE
+        id = ?
+    SQL
   end
 
   def self.finalize!
@@ -110,6 +117,13 @@ class SQLObject
   def values_to_store
     my_columns = self.class.columns
     (["?"] * my_columns[1..-1].size).join(",")
+  end
+
+  def values_to_update
+    table_columns = table_class.columns
+    table_columns[1..-1].map do |column|
+      "#{column} = ?"
+    end.join(", ")
   end
 
   def table_class
