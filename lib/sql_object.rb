@@ -44,9 +44,31 @@ class SQLObject
   end
 
   def self.all
+    data = DBConnection.execute(<<-SQL)
+      SELECT
+        *
+      FROM
+        #{self.table_name}
+    SQL
+    parse_all(data)
   end
 
-  def self.find
+  def self.parse_all(results)
+    results.map { |result| self.new(result) }
+  end
+
+  def self.find(id)
+    object = DBConnection.execute(<<-SQL, id)
+      SELECT
+        *
+      FROM
+        #{table_name}
+      WHERE
+        id = ?
+      LIMIT
+        1
+    SQL
+    object[0] ? new(object[0]) : nil
   end
 
   def insert
