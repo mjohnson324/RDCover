@@ -1,7 +1,15 @@
 require_relative 'search'
-require 'active_support/inflector'
 
 class AssociationOptions
+  attr_accessor :foreign_key, :class_name, :primary_key
+
+  def model_class
+    @class_name.constantize
+  end
+
+  def table_name
+    "#{model_class.underscore}s"
+  end
 end
 
 class BelongsToOptions < AssociationOptions
