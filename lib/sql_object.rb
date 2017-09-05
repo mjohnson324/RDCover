@@ -14,6 +14,18 @@ class SQLObject
     @table_name ||= name
   end
 
+  def self.columns
+    return @columns if @columns
+    table_names = DBConnection.execute2(<<-SQL)
+      SELECT
+        *
+      FROM
+        #{self.table_name}
+      LIMIT 1
+    SQL
+    @columns = table_names.first.map(&:to_sym)
+  end
+
   def self.all
   end
 
