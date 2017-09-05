@@ -3,10 +3,9 @@ require 'active_support/inflector'
 
 class SQLObject
   def initialize(params = {})
-    class_columns = self.class.columns
     params.each do |attribute, value|
       symbolized_attribute = attribute.to_sym
-      if class_columns.include?(symbolized_attribute)
+      if table_class.columns.include?(symbolized_attribute)
         self.send("#{symbolized_attribute}=", value)
       else
         raise "Unknown attribute '#{attribute}'"
@@ -49,7 +48,7 @@ class SQLObject
       SELECT
         *
       FROM
-        #{self.table_name}
+        #{table_name}
     SQL
     parse_all(data)
   end
