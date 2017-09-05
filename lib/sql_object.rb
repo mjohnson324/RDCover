@@ -29,8 +29,9 @@ class SQLObject
       SELECT
         *
       FROM
-        #{self.table_name}
-      LIMIT 1
+        #{table_name}
+      LIMIT
+        1
     SQL
     @columns = table_names.first.map(&:to_sym)
   end
@@ -72,6 +73,17 @@ class SQLObject
   end
 
   def insert
+    my_class = self.class
+    column_names = my_class.columns[1..-1].join(",")
+    values_to_store = (["?"] * my_class.columns[1..-1].size).join(",")
+    my_values = attribute_values
+    DBConnection.execute(<<-SQL, *my_values)
+      INSERT INTO
+        #{my_class.table_name} (#{column_names})
+      VALUES
+        (#{values_to_store})
+      SQL
+    self.id = DBConnection.last_insert_row_id
   end
 
   def save
@@ -79,7 +91,7 @@ class SQLObject
   end
 
   def update
-    
+
   end
 
   def self.finalize!
