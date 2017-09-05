@@ -75,9 +75,11 @@ class SQLObject
   end
 
   def save
+    id.nil? ? insert : update
   end
 
   def update
+    
   end
 
   def self.finalize!
