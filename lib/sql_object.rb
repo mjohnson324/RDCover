@@ -2,7 +2,16 @@ require_relative 'db_connection'
 require 'active_support/inflector'
 
 class SQLObject
-  def initialize
+  def initialize(params = {})
+    class_columns = self.class.columns
+    params.each do |attribute, value|
+      symbolized_attribute = attribute.to_sym
+      if class_columns.include?(symbolized_attribute)
+        self.send("#{symbolized_attribute}=", value)
+      else
+        raise "Unknown attribute '#{attribute}'"
+      end
+    end
   end
 
   def self.table_name
@@ -26,6 +35,14 @@ class SQLObject
     @columns = table_names.first.map(&:to_sym)
   end
 
+  def attributes
+    @attributes ||= {}
+  end
+
+  def attribute_values
+    @attributes.values
+  end
+
   def self.all
   end
 
@@ -39,5 +56,16 @@ class SQLObject
   end
 
   def update
+  end
+
+  def self.finalize!
+    columns.each do |column|
+      define_method(column) do
+        attributes[column]
+      end
+      define_method("#{column}=") do |value|
+        attributes[column] = value
+      end
+    end
   end
 end
