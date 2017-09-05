@@ -73,13 +73,9 @@ class SQLObject
   end
 
   def insert
-    my_class = self.class
-    column_names = my_class.columns[1..-1].join(",")
-    values_to_store = (["?"] * my_class.columns[1..-1].size).join(",")
-    my_values = attribute_values
-    DBConnection.execute(<<-SQL, *my_values)
+    DBConnection.execute(<<-SQL, *attribute_values)
       INSERT INTO
-        #{my_class.table_name} (#{column_names})
+        #{table_class.table_name} (#{column_names_string})
       VALUES
         (#{values_to_store})
       SQL
@@ -103,5 +99,21 @@ class SQLObject
         attributes[column] = value
       end
     end
+  end
+
+  private
+
+  def column_names_string
+    my_class = self.class
+    my_class.columns[1..-1].join(",")
+  end
+
+  def values_to_store
+    my_columns = self.class.columns
+    (["?"] * my_columns[1..-1].size).join(",")
+  end
+
+  def table_class
+    self.class
   end
 end
