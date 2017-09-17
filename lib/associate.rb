@@ -36,6 +36,7 @@ end
 module Associates
   def belongs_to(name, options = {})
     belong_options = BelongsToOptions.new(name, options)
+    @association_options = { name => belong_options }
     define_method(name) do
       foreign_key = self.send(belong_options.foreign_key)
       owner_class = belong_options.model_class
@@ -52,6 +53,10 @@ module Associates
       primary_key = self.send(having_association.primary_key)
       owned_class.where(foreign_key => primary_key)
     end
+  end
+
+  def association_options
+    @association_options ||= {}
   end
 end
 
