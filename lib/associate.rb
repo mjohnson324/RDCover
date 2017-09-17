@@ -58,6 +58,10 @@ module Associates
   def association_options
     @association_options ||= {}
   end
+
+  def has_one_through(name, through_name, source_name)
+    
+  end
 end
 
 class SQLObject
