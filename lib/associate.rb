@@ -47,7 +47,10 @@ module Associates
   def has_many(name, options = {})
     owning_options = HasManyOptions.new(name, options)
     define_method(name) do
-
+      foreign_key = owning_options.foreign_key
+      owned_class = owning_options.model_class
+      primary_key = self.send(having_association.primary_key)
+      owned_class.where(foreign_key => primary_key)
     end
   end
 end
