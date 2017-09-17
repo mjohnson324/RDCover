@@ -25,8 +25,8 @@ end
 class HasManyOptions < AssociationOptions
   def initialize(name, self_class_name, options = {})
     name = name.to_s
-    defaults = { foreign_key: "#{self_class_name}_id".underscore.to_sym,
-                 class_name: name.singularize.camelcase,
+    defaults = { foreign_key: "#{self_class_name.underscore}_id".to_sym,
+                 class_name: name.to_s.singularize.camelcase,
                  primary_key: :id }
     options = defaults.merge(options)
     options.each_key { |key| send("#{key}=", options[key]) }
@@ -37,14 +37,17 @@ module Associates
   def belongs_to(name, options = {})
     belong_options = BelongsToOptions.new(name, options)
     define_method(name) do
-
+      foreign_key = self.send(belong_options.foreign_key)
+      owner_class = belong_options.model_class
+      primary_key = belong_options.primary_key
+      owner_class.where(primary_key => foreign_key)
     end
   end
 
   def has_many(name, options = {})
     owning_options = HasManyOptions.new(name, options)
     define_method(name) do
-      
+
     end
   end
 end
