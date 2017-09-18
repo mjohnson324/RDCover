@@ -1,6 +1,3 @@
-require_relative 'db_connection'
-require_relative 'sql_object'
-
 module Search
   def where(params)
     filters = param_filters(params)

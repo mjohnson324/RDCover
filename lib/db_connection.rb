@@ -4,8 +4,9 @@ PRINT_QUERIES = ENV['PRINT_QUERIES'] == 'true'
 
 ROOT_FOLDER = File.join(File.dirname(__FILE__), '..')
 
-SIMPSONS_SQL_FILE = File.join(ROOT_FOLDER, 'simpsons.sql')
-SIMPSONS_DB_FILE = File.join(ROOT_FOLDER, 'simpsons.db')
+SQL_FILE = File.join(ROOT_FOLDER, 'simpsons.sql')
+DB_FILE = File.join(ROOT_FOLDER, 'simpsons.db')
+# Change SQL_FILE and DB_FILE to connect library with other databases
 
 class DBConnection
   def self.open(db_file_name)
@@ -18,12 +19,12 @@ class DBConnection
 
   def self.reset
     commands = [
-      "rm '#{SIMPSONS_DB_FILE}'",
-      "cat '#{SIMPSONS_SQL_FILE}' | sqlite3 '#{SIMPSONS_DB_FILE}'"
+      "rm '#{DB_FILE}'",
+      "cat '#{SQL_FILE}' | sqlite3 '#{DB_FILE}'"
     ]
 
     commands.each { |command| `#{command}` }
-    DBConnection.open(SIMPSONS_DB_FILE)
+    DBConnection.open(DB_FILE)
   end
 
   def self.instance

@@ -1,4 +1,3 @@
-require_relative 'db_connection'
 require 'active_support/inflector'
 
 class SQLObject
@@ -14,7 +13,7 @@ class SQLObject
   end
 
   def self.table_name
-    @table_name ||= "#{self}".tableize
+    @table_name ||= self.to_s.tableize
   end
 
   def self.table_name=(name)
