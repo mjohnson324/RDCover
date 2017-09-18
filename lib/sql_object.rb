@@ -110,12 +110,12 @@ class SQLObject
   private
 
   def column_names_string
-    my_class = self.class
+    my_class = table_class
     my_class.columns[1..-1].join(",")
   end
 
   def values_to_store
-    my_columns = self.class.columns
+    my_columns = table_class.columns
     (["?"] * my_columns[1..-1].size).join(",")
   end
 
