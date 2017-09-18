@@ -21,7 +21,7 @@ CREATE TABLE homes (
 );
 
 INSERT INTO
-  houses (id, address)
+  homes (id, address)
 VALUES
   (1, "742 Evergreen Terrace"),
   (2, "1000 Mammon Avenue"),
