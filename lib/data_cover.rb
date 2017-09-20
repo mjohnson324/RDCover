@@ -1,6 +1,12 @@
 require 'active_support/inflector'
+require_relative 'db_connection'
+require_relative 'search'
+require_relative 'associate'
 
-class SQLObject
+class DataCover
+  extend Search
+  extend Associates
+
   def initialize(params = {})
     params.each do |attribute, value|
       symbolized_attribute = attribute.to_sym

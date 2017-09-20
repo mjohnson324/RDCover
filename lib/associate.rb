@@ -71,7 +71,3 @@ module Associates
     SQL
   end
 end
-
-class SQLObject
-  extend Associates
-end

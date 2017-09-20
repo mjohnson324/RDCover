@@ -2,12 +2,6 @@ require 'sqlite3'
 
 PRINT_QUERIES = ENV['PRINT_QUERIES'] == 'true'
 
-ROOT_FOLDER = File.join(File.dirname(__FILE__), '..')
-
-SQL_FILE = File.join(ROOT_FOLDER, 'simpsons.sql')
-DB_FILE = File.join(ROOT_FOLDER, 'simpsons.db')
-# Change SQL_FILE and DB_FILE to connect library with other databases
-
 class DBConnection
   def self.open(db_file_name)
     @db = SQLite3::Database.new(db_file_name)

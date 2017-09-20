@@ -19,7 +19,3 @@ module Search
     column_names.map { |column| "#{column} = ?" }.join(" AND ")
   end
 end
-
-class SQLObject
-  extend Search
-end
