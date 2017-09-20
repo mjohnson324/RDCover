@@ -4,24 +4,17 @@ RDCover, or Ruby DataCover is an Object Relational Mapping library for interfaci
 
 ## Demo:
 ---
-See DataCover in action
+See DataCover in action by loading 'demo.rb' in pry/irb. If not already present, a database will be created as well several model classes demonstrating the functionality of DataCover.
+
+The model names are, respectively, Pet, Character, and Home, with data entries themed off The Simpsons.
+
+Note the following relations:
+- pets belong to characters; characters have many pets
+- characters belong to homes; homes have many characters
+- pets have one home through their owners
 
 ## Basic Methods:
 ---
-
-::find
-
-#all
-
-::insert
-
-::update
-
-#save
-
-#update
-
-#insert
 
 ::new
 
@@ -29,11 +22,15 @@ See DataCover in action
 
 ::all
 
-::last
-
-::first
-
 ::columns
+
+#attributes
+
+#save
+
+#update
+
+#insert
 
 ## Associations:
 ---
