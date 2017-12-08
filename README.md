@@ -40,9 +40,9 @@ Note the following relations:
 
 ::has_one_through
 
-## Queries:
+## Search Module:
 ---
-::where
+::where(parameters) - Perform basic filter queries. Accepts a parameters hash where keys correspond to column names and values correspond to column values.
 
 ## Potential Future Additions
 ---
