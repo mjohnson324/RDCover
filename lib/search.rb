@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-# Module for performing database queries
+require_relative 'db_connection'
+require_relative 'data_wrapper'
+
+# Module for performing basic search queries
 module Search
   def where(params)
     filters = param_filters(params)
@@ -21,4 +24,9 @@ module Search
     column_names = params.keys
     column_names.map { |column| "#{column} = ?" }.join(' AND ')
   end
+end
+
+# Already defined
+class DataWrapper
+  extend Search
 end
