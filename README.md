@@ -4,6 +4,12 @@ RDCover is an object relational mapping library for interfacing with SQL databas
 
 This library is meant to showcase how Ruby's metaprogramming capabilities enable defining associations between models in a convenient way.
 
+## Tools
+
+- ruby 2.5.1
+- gem sqlite3 1.4.1
+- sqlite3 3.22.0
+
 ---
 
 ## Setup
