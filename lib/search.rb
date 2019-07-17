@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Module for performing database queries
 module Search
   def where(params)
     filters = param_filters(params)
@@ -16,6 +19,6 @@ module Search
 
   def param_filters(params)
     column_names = params.keys
-    column_names.map { |column| "#{column} = ?" }.join(" AND ")
+    column_names.map { |column| "#{column} = ?" }.join(' AND ')
   end
 end

@@ -44,10 +44,10 @@ The model names are, respectively, Pet, Character, and Home, with data entries t
 
 The following methods are applied as class methods in the example demo file. During runtime model associations are defined via metaprogramming and can be called on instances.
 
-For example, executing the following code after loading demo.rb will list Bart's pets as Santa's Little Helper and Stampy.
+For example, executing the following code after loading demo.rb will list Bart's pets as Santa's Little Helper.
 
 ```ruby
-    bart = Character.find(3)
+    bart = Character.find(1)
     bart.pets
 ```
 

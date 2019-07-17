@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'lib/data_cover'
 
 ROOT_FOLDER = File.join(File.dirname(__FILE__), '/')
@@ -9,9 +11,10 @@ DBConnection.open(DB_FILE)
 # characters, id, fname, lname, house_id
 # homes: id, address
 
+# Pets from The Simpsons tv show
 class Pet < DataCover
   belongs_to :character,
-             class_name: "Character",
+             class_name: 'Character',
              foreign_key: :owner_id,
              primary_key: :id
 
@@ -20,23 +23,25 @@ class Pet < DataCover
   Pet.finalize!
 end
 
+# Characters from The Simpsons
 class Character < DataCover
   has_many :pets,
-           class_name: "Pet",
+           class_name: 'Pet',
            foreign_key: :owner_id,
            primary_key: :id
 
   belongs_to :home,
-             class_name: "Home",
+             class_name: 'Home',
              foreign_key: :house_id,
              primary_key: :id
 
   Character.finalize!
 end
 
+# Settings from The Simpsons
 class Home < DataCover
   has_many :characters,
-           class_name: "Character",
+           class_name: 'Character',
            foreign_key: :house_id,
            primary_key: :id
 
