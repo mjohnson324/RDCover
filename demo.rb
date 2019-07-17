@@ -1,44 +1,40 @@
-require_relative 'lib/data_cover'
+# frozen_string_literal: true
 
-ROOT_FOLDER = File.join(File.dirname(__FILE__), '/')
-SQL_FILE = File.join(ROOT_FOLDER, 'simpsons.sql')
-DB_FILE = File.join(ROOT_FOLDER, 'simpsons.db')
-DBConnection.open(DB_FILE)
+require_relative 'lib/associations.rb'
 
-# pets: id, name, owner_id
-# characters, id, fname, lname, house_id
-# homes: id, address
-
-class Pet < DataCover
-  belongs_to :character,
-             class_name: "Character",
+# Pets from The Simpsons tv show
+class Pet < DataWrapper
+  belongs_to :owner,
+             class_name: 'Character',
              foreign_key: :owner_id,
              primary_key: :id
 
-  has_one_through :house, :character, :home
+  has_one_through :home, :character, :house
 
-  Pet.finalize!
+  finalize!
 end
 
-class Character < DataCover
+# Characters from The Simpsons
+class Character < DataWrapper
   has_many :pets,
-           class_name: "Pet",
+           class_name: 'Pet',
            foreign_key: :owner_id,
            primary_key: :id
 
-  belongs_to :home,
-             class_name: "Home",
+  belongs_to :house,
+             class_name: 'House',
              foreign_key: :house_id,
              primary_key: :id
 
-  Character.finalize!
+  finalize!
 end
 
-class Home < DataCover
+# Homes from The Simpsons
+class House < DataWrapper
   has_many :characters,
-           class_name: "Character",
+           class_name: 'Character',
            foreign_key: :house_id,
            primary_key: :id
 
-  Home.finalize!
+  finalize!
 end
